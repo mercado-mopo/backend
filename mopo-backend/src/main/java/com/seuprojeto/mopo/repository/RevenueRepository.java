@@ -3,9 +3,9 @@ package com.seuprojeto.mopo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.seuprojeto.mopo.model.Receita;
+import com.seuprojeto.mopo.model.Revenue;
 
 @Repository
-public interface ReceitaRepository extends JpaRepository<Receita, Long> {
+public interface RevenueRepository extends JpaRepository<Revenue, Long> {
     
 }
