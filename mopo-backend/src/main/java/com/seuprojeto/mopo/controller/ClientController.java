@@ -4,12 +4,14 @@ import com.seuprojeto.mopo.dto.ClientResponseDTO;
 import com.seuprojeto.mopo.model.Client;
 import com.seuprojeto.mopo.service.ClientService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/api/client")
+@Validated
 @CrossOrigin(origins = "http://localhost:4200")
 public class ClientController {
 
