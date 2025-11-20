@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MopoBackendApplication {
+public class MopoApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MopoBackendApplication.class, args);
+        SpringApplication.run(MopoApplication.class, args);
     }
 }
