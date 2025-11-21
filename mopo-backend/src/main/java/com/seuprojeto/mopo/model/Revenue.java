@@ -1,68 +1,88 @@
 package com.seuprojeto.mopo.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "revenue")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
 public class Revenue {
+    public Revenue() {
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false, unique = true, length = 120)
-    @NotNull
     @NotBlank
-    private String title;
+    private String name;
 
-    @Column(length = 300)
+    @NotBlank
     private String describe;
 
-    @Column
-    @Lob
-    private String image;
+    @NotBlank
+    private String preparationTime;
 
-    @Column(nullable = false)
-    @NotEmpty
-    private List<@NotBlank String> ingredients;
+    @NotBlank
+    private String efficiency;
 
-    @Column(nullable = false)
-    @NotEmpty
-    private List<@NotBlank String> instructions;
-
-    @Column(nullable = false, length = 5760)
-    @NotNull
-    private int preparationTime;
-
-    @Column(length = 100)
-    private int efficiency;
-
-    @Column(length = 5)
-    private int rating;
-
-    @Column(length = 5)
-    private int difficulty;
-
-    @CreationTimestamp
+    @NotBlank
     private String createdAt;
 
-    @UpdateTimestamp
-    private String updatedAt;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getPreparationTime() {
+        return preparationTime;
+    }
+
+    public void setPreparationTime(String preparationTime) {
+        this.preparationTime = preparationTime;
+    }
+
+    public String getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(String efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Revenue(@NotBlank String nome, @NotBlank String describe, @NotBlank String preparationTime,
+                   @NotBlank String efficiency, @NotBlank String createdAt) {
+        this.name = nome;
+        this.describe = describe;
+        this.preparationTime = preparationTime;
+        this.efficiency = efficiency;
+        this.createdAt = createdAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
 }

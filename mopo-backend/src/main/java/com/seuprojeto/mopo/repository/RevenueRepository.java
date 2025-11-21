@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.seuprojeto.mopo.model.Revenue;
 
-import java.util.UUID;
-
 @Repository
-public interface RevenueRepository extends JpaRepository<Revenue, UUID> {
+public interface RevenueRepository extends JpaRepository<Revenue, Long> {
     
 }
