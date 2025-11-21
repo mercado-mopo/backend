@@ -1,6 +1,6 @@
 package com.seuprojeto.mopo.service;
 
-import com.seuprojeto.mopo.dto.UserResponseDTO;
+import com.seuprojeto.mopo.dto.response.UserResponseDTO;
 import com.seuprojeto.mopo.dto.request.CreateClientRequestDTO;
 import com.seuprojeto.mopo.model.Client;
 import com.seuprojeto.mopo.repository.ClientRepository;
