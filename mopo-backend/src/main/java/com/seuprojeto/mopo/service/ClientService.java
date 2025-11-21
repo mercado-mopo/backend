@@ -1,6 +1,6 @@
 package com.seuprojeto.mopo.service;
 
-import com.seuprojeto.mopo.dto.UserResponseDTO;
+import com.seuprojeto.mopo.dto.response.UserResponseDTO;
 import com.seuprojeto.mopo.dto.request.CreateClientRequestDTO;
 import com.seuprojeto.mopo.model.Client;
 import com.seuprojeto.mopo.repository.ClientRepository;
@@ -26,7 +26,7 @@ public class ClientService {
                 .build();
 
         var response = repository.save(entity);
-        return new UserResponseDTO(response.getId(), response.getName(), response.getEmail(), response.getTelephone());
+        return new UserResponseDTO(response);
     }
 
     public List<Client> readAll() {

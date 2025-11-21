@@ -3,7 +3,7 @@ package com.seuprojeto.mopo.controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.seuprojeto.mopo.dto.RevenueRequestDTO;
+import com.seuprojeto.mopo.dto.response.RevenueRequestDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.service.RevenueService;
 

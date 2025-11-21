@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.seuprojeto.mopo.dto.RevenueRequestDTO;
+import com.seuprojeto.mopo.dto.response.RevenueRequestDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.repository.RevenueRepository;
 
