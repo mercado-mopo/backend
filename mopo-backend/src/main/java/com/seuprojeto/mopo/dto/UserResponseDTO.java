@@ -1,4 +1,4 @@
-package com.seuprojeto.mopo.dto.response;
+package com.seuprojeto.mopo.dto;
 
 import java.util.UUID;
 
