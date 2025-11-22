@@ -1,16 +1,15 @@
 package com.seuprojeto.mopo.controller;
 
+import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
+import com.seuprojeto.mopo.dto.response.RevenueResponseDTO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.seuprojeto.mopo.dto.response.RevenueRequestDTO;
-import com.seuprojeto.mopo.model.Revenue;
+import com.seuprojeto.mopo.dto.request.RevenueRequestDTO;
 import com.seuprojeto.mopo.service.RevenueService;
 
-import jakarta.validation.Valid;
-
-import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,33 +26,27 @@ public class RevenueController {
     }
 
     @PostMapping
-    public ResponseEntity<Revenue> create(@RequestBody RevenueRequestDTO dto) {
-        Revenue response = service.create(dto);
-        return ResponseEntity.created(URI.create("" + response.getId())).body(response);
+    public ResponseEntity<RevenueResponseDTO> create(@RequestBody CreateOrUpdateRevenueRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping
-    public List<Revenue> readAll() {
+    public List<RevenueResponseDTO> readAll() {
         return service.readAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Revenue> readById(@PathVariable Long id) {
-        var response = service.readById(id);
-        if (response == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<RevenueResponseDTO> readById(@PathVariable UUID id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Revenue> update(@PathVariable Long id, @Valid @RequestBody RevenueRequestDTO dto) {
-        Revenue response = service.update(id, dto);
-        if (response == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<RevenueResponseDTO> update(@PathVariable UUID id, @RequestBody RevenueRequestDTO dto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        boolean response = service.delete(id);
-        return response ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<RevenueResponseDTO> delete(@PathVariable UUID id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
     }
 }
