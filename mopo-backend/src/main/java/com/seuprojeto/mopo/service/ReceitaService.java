@@ -10,7 +10,6 @@ import com.seuprojeto.mopo.repository.ReceitaRepository;
 
 @Service
 public class ReceitaService {
-    
     private final ReceitaRepository repository;
 
     public ReceitaService(ReceitaRepository repository) {

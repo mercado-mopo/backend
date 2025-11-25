@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name="receita")
 public class Receita {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,7 +29,11 @@ public class Receita {
     @NotBlank
     private String dataInsercao;
 
-    public String getNome() {
+  public Receita() {
+
+  }
+
+  public String getNome() {
         return nome;
     }
 

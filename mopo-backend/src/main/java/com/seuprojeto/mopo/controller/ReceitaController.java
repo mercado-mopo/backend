@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/revenue")
 public class ReceitaController {
     private final ReceitaService service;
 
@@ -36,7 +36,7 @@ public class ReceitaController {
         Receita criado = service.criarReceita(dto);
         return ResponseEntity.created(URI.create("" + criado.getId())).body(criado);
     }
-    
+
     @GetMapping
     public List<Receita> listarTodasReceitas(){
         return service.listarTodasReceitas();
