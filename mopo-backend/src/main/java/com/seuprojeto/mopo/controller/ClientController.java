@@ -1,7 +1,7 @@
 package com.seuprojeto.mopo.controller;
 
 import com.seuprojeto.mopo.dto.ClienteDTO;
-import com.seuprojeto.mopo.model.Cliente;
+import com.seuprojeto.mopo.model.Client;
 import com.seuprojeto.mopo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +19,12 @@ public class ClientController {
   private ClientService service;
 
   @PostMapping
-  public ResponseEntity<ClienteDTO> create(@RequestBody Cliente client) {
+  public ResponseEntity<ClienteDTO> create(@RequestBody Client client) {
     return ResponseEntity.status(HttpStatus.CREATED).body(service.create(client));
   }
 
   @GetMapping
-  public ResponseEntity<List<Cliente>> readAll() {
+  public ResponseEntity<List<Client>> readAll() {
     return ResponseEntity.status(HttpStatus.OK).body(service.readAll());
   }
 }
