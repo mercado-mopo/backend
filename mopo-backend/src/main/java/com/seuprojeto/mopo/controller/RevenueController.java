@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seuprojeto.mopo.dto.ReceitaDTO;
 import com.seuprojeto.mopo.model.Receita;
-import com.seuprojeto.mopo.service.ReceitaService;
+import com.seuprojeto.mopo.service.RevenueService;
 
 import jakarta.validation.Valid;
 
@@ -27,36 +27,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/revenue")
 public class RevenueController {
   @Autowired
-  private ReceitaService service;
+  private RevenueService service;
 
   @PostMapping
   public ResponseEntity<Receita> create(@RequestBody ReceitaDTO dto) {
-    var entity = service.criarReceita(dto);
+    var entity = service.create(dto);
     return ResponseEntity.created(URI.create("" + entity.getId())).body(entity);
   }
 
   @GetMapping
   public List<Receita> readAll() {
-    return service.listarTodasReceitas();
+    return service.readAll();
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Receita> readById(@PathVariable Long id) {
-    var entity = service.buscaPorIdReceita(id);
+    var entity = service.readById(id);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<Receita> update(@PathVariable Long id, @Valid @RequestBody ReceitaDTO dto) {
-    var entity = service.atualizarReceita(id, dto);
+    var entity = service.update(id, dto);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    boolean wasDeleted = service.excluirReceita(id);
+    boolean wasDeleted = service.delete(id);
     return wasDeleted ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 }
