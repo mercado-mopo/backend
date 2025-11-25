@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.seuprojeto.mopo.dto.ReceitaDTO;
+import com.seuprojeto.mopo.dto.RevenueDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.service.RevenueService;
 
@@ -30,7 +30,7 @@ public class RevenueController {
   private RevenueService service;
 
   @PostMapping
-  public ResponseEntity<Revenue> create(@RequestBody ReceitaDTO dto) {
+  public ResponseEntity<Revenue> create(@RequestBody RevenueDTO dto) {
     var entity = service.create(dto);
     return ResponseEntity.created(URI.create("" + entity.getId())).body(entity);
   }
@@ -48,7 +48,7 @@ public class RevenueController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Revenue> update(@PathVariable Long id, @Valid @RequestBody ReceitaDTO dto) {
+  public ResponseEntity<Revenue> update(@PathVariable Long id, @Valid @RequestBody RevenueDTO dto) {
     var entity = service.update(id, dto);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);

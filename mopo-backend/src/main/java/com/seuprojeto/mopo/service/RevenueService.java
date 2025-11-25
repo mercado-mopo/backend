@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.seuprojeto.mopo.dto.ReceitaDTO;
+import com.seuprojeto.mopo.dto.RevenueDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.repository.IRevenueRepository;
 
@@ -15,8 +15,8 @@ public class RevenueService {
   @Autowired
   private IRevenueRepository repository;
 
-  public Revenue create(ReceitaDTO dto) {
-    var entity = new Revenue(dto.nome(), dto.descricao(), dto.tempoPreparo(), dto.rendimento(), dto.dataInsercao());
+  public Revenue create(RevenueDTO dto) {
+    var entity = new Revenue(dto.title(), dto.description(), dto.preparationTime(), dto.efficiency(), dto.createAt());
     return repository.save(entity);
   }
 
@@ -28,13 +28,13 @@ public class RevenueService {
     return repository.findById(id).orElse(null);
   }
 
-  public Revenue update(Long id, ReceitaDTO dto) {
+  public Revenue update(Long id, RevenueDTO dto) {
     return repository.findById(id).map(existing -> {
-      existing.setTitle(dto.nome());
-      existing.setDescription(dto.descricao());
-      existing.setPreparationTime(dto.tempoPreparo());
-      existing.setEfficiency(dto.rendimento());
-      existing.setCreatedAt(dto.dataInsercao());
+      existing.setTitle(dto.title());
+      existing.setDescription(dto.description());
+      existing.setPreparationTime(dto.preparationTime());
+      existing.setEfficiency(dto.efficiency());
+      existing.setCreatedAt(dto.createAt());
 
       return repository.save(existing);
     }).orElse(null);
