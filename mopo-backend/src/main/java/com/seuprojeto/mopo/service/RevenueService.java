@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.seuprojeto.mopo.dto.RevenueDTO;
+import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.repository.IRevenueRepository;
 
@@ -15,7 +15,7 @@ public class RevenueService {
   @Autowired
   private IRevenueRepository repository;
 
-  public Revenue create(RevenueDTO dto) {
+  public Revenue create(CreateOrUpdateRevenueRequestDTO dto) {
     var entity = new Revenue(dto.title(), dto.description(), dto.preparationTime(), dto.efficiency(), dto.createAt());
     return repository.save(entity);
   }
@@ -28,7 +28,7 @@ public class RevenueService {
     return repository.findById(id).orElse(null);
   }
 
-  public Revenue update(Long id, RevenueDTO dto) {
+  public Revenue update(Long id, CreateOrUpdateRevenueRequestDTO dto) {
     return repository.findById(id).map(existing -> {
       existing.setTitle(dto.title());
       existing.setDescription(dto.description());
