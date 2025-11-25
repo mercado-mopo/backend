@@ -2,7 +2,7 @@ package com.seuprojeto.mopo.service;
 
 import com.seuprojeto.mopo.dto.ClienteDTO;
 import com.seuprojeto.mopo.model.Cliente;
-import com.seuprojeto.mopo.repository.ClienteRepository;
+import com.seuprojeto.mopo.repository.IClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class ClientService {
 
   @Autowired
-  private ClienteRepository repository;
+  private IClientRepository repository;
 
   public ClienteDTO create(Cliente client) {
     var entity = repository.save(client);
