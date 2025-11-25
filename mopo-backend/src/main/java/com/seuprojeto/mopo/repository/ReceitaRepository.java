@@ -7,5 +7,4 @@ import com.seuprojeto.mopo.model.Receita;
 
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
-    
 }
