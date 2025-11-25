@@ -1,6 +1,7 @@
 package com.seuprojeto.mopo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,13 @@ public class RevenueService {
   private IRevenueRepository repository;
 
   public Revenue create(CreateOrUpdateRevenueRequestDTO dto) {
-    var entity = new Revenue(dto.title(), dto.description(), dto.preparationTimeInMinutes(), dto.efficiency());
+    var entity = new Revenue(
+      dto.title(),
+      dto.image(),
+      dto.ingredients(),
+      dto.instructions(),
+      dto.preparationTimeInMinutes()
+    );
     return repository.save(entity);
   }
 
@@ -24,11 +31,11 @@ public class RevenueService {
     return repository.findAll();
   }
 
-  public Revenue readById(Long id) {
+  public Revenue readById(UUID id) {
     return repository.findById(id).orElse(null);
   }
 
-  public Revenue update(Long id, CreateOrUpdateRevenueRequestDTO dto) {
+  public Revenue update(UUID id, CreateOrUpdateRevenueRequestDTO dto) {
     return repository.findById(id).map(existing -> {
       existing.setTitle(dto.title());
       existing.setDescription(dto.description());
@@ -39,7 +46,7 @@ public class RevenueService {
     }).orElse(null);
   }
 
-  public boolean delete(Long id) {
+  public boolean delete(UUID id) {
     if (repository.existsById(id)) {
       repository.deleteById(id);
       return true;

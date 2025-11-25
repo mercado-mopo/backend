@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,21 +42,21 @@ public class RevenueController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Revenue> readById(@PathVariable Long id) {
+  public ResponseEntity<Revenue> readById(@PathVariable UUID id) {
     var entity = service.readById(id);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Revenue> update(@PathVariable Long id, @Valid @RequestBody CreateOrUpdateRevenueRequestDTO dto) {
+  public ResponseEntity<Revenue> update(@PathVariable UUID id, @Valid @RequestBody CreateOrUpdateRevenueRequestDTO dto) {
     var entity = service.update(id, dto);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
     boolean wasDeleted = service.delete(id);
     return wasDeleted ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
