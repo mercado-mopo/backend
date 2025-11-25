@@ -10,14 +10,14 @@ public class Client {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "O nome não pode ser vazio")
+  @NotBlank(message = "O username não pode ser vazio")
   private String username;
 
   @Email(message = "E-mail inválido")
   @NotBlank(message = "O e-mail é obrigatório")
   private String email;
 
-  @NotBlank(message = "O telefone é obrigatório")
+  @NotBlank(message = "O telephone é obrigatório")
   private String telephone;
 
   public Client() {
