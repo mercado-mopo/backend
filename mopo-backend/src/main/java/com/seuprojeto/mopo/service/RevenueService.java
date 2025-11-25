@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.seuprojeto.mopo.dto.ReceitaDTO;
 import com.seuprojeto.mopo.model.Receita;
-import com.seuprojeto.mopo.repository.ReceitaRepository;
+import com.seuprojeto.mopo.repository.IRevenueRepository;
 
 @Service
 public class RevenueService {
 
   @Autowired
-  private ReceitaRepository repository;
+  private IRevenueRepository repository;
 
   public Receita create(ReceitaDTO dto) {
     var entity = new Receita(dto.nome(), dto.descricao(), dto.tempoPreparo(), dto.rendimento(), dto.dataInsercao());
