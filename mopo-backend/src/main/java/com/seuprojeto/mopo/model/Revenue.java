@@ -14,19 +14,14 @@ public class Revenue {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
   private String title;
 
-  @NotBlank
   private String description;
 
-  @NotBlank
-  private String preparationTime;
+  private int preparationTime;
 
-  @NotBlank
-  private String efficiency;
+  private int efficiency;
 
-  @NotBlank
   private String createdAt;
 
   public Revenue() {
@@ -49,19 +44,19 @@ public class Revenue {
     this.description = description;
   }
 
-  public String getPreparationTime() {
+  public int getPreparationTime() {
     return preparationTime;
   }
 
-  public void setPreparationTime(String preparationTime) {
+  public void setPreparationTime(int preparationTime) {
     this.preparationTime = preparationTime;
   }
 
-  public String getEfficiency() {
+  public int getEfficiency() {
     return efficiency;
   }
 
-  public void setEfficiency(String efficiency) {
+  public void setEfficiency(int efficiency) {
     this.efficiency = efficiency;
   }
 
@@ -73,13 +68,12 @@ public class Revenue {
     this.createdAt = createdAt;
   }
 
-  public Revenue(@NotBlank String nome, @NotBlank String description, @NotBlank String preparationTime,
-                 @NotBlank String efficiency, @NotBlank String createdAt) {
+  public Revenue(String nome, String description, int preparationTime,
+                 int efficiency) {
     this.title = nome;
     this.description = description;
     this.preparationTime = preparationTime;
     this.efficiency = efficiency;
-    this.createdAt = createdAt;
   }
 
   public Long getId() {

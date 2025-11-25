@@ -16,7 +16,7 @@ public class RevenueService {
   private IRevenueRepository repository;
 
   public Revenue create(CreateOrUpdateRevenueRequestDTO dto) {
-    var entity = new Revenue(dto.title(), dto.description(), dto.preparationTime(), dto.efficiency(), dto.createAt());
+    var entity = new Revenue(dto.title(), dto.description(), dto.preparationTimeInMinutes(), dto.efficiency());
     return repository.save(entity);
   }
 
@@ -32,9 +32,8 @@ public class RevenueService {
     return repository.findById(id).map(existing -> {
       existing.setTitle(dto.title());
       existing.setDescription(dto.description());
-      existing.setPreparationTime(dto.preparationTime());
+      existing.setPreparationTime(dto.preparationTimeInMinutes());
       existing.setEfficiency(dto.efficiency());
-      existing.setCreatedAt(dto.createAt());
 
       return repository.save(existing);
     }).orElse(null);
