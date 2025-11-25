@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuprojeto.mopo.dto.ReceitaDTO;
-import com.seuprojeto.mopo.model.Receita;
+import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.service.RevenueService;
 
 import jakarta.validation.Valid;
@@ -30,25 +30,25 @@ public class RevenueController {
   private RevenueService service;
 
   @PostMapping
-  public ResponseEntity<Receita> create(@RequestBody ReceitaDTO dto) {
+  public ResponseEntity<Revenue> create(@RequestBody ReceitaDTO dto) {
     var entity = service.create(dto);
     return ResponseEntity.created(URI.create("" + entity.getId())).body(entity);
   }
 
   @GetMapping
-  public List<Receita> readAll() {
+  public List<Revenue> readAll() {
     return service.readAll();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Receita> readById(@PathVariable Long id) {
+  public ResponseEntity<Revenue> readById(@PathVariable Long id) {
     var entity = service.readById(id);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Receita> update(@PathVariable Long id, @Valid @RequestBody ReceitaDTO dto) {
+  public ResponseEntity<Revenue> update(@PathVariable Long id, @Valid @RequestBody ReceitaDTO dto) {
     var entity = service.update(id, dto);
     if (entity == null) return ResponseEntity.notFound().build();
     return ResponseEntity.ok(entity);
