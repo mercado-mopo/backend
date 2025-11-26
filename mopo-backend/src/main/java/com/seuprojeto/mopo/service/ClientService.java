@@ -26,8 +26,8 @@ public class ClientService {
     return repository.findAll().stream().map(c -> new ClientResponseDTO(c.getId(), c.getUsername(), c.getEmail(), c.getTelephone())).collect(Collectors.toList());
   }
 
-  public ClientResponseDTO readById(@PathVariable UUID id) {
-    var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+  public ClientResponseDTO readById(@PathVariable UUID id) throws Exception {
+    var entity = repository.findById(id).orElseThrow(() -> new Exception("User not found"));
     return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
   }
 

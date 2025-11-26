@@ -30,7 +30,7 @@ public class ClientController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<ClientResponseDTO> readById(@PathVariable UUID id) {
+  public ResponseEntity<ClientResponseDTO> readById(@PathVariable UUID id) throws Exception {
     return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
   }
 
