@@ -8,9 +8,6 @@ import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.service.RevenueService;
 
-import jakarta.validation.Valid;
-
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +30,7 @@ public class RevenueController {
   @PostMapping
   public ResponseEntity<Revenue> create(@RequestBody CreateOrUpdateRevenueRequestDTO dto) {
     var entity = service.create(dto);
-    return ResponseEntity.created(URI.create("" + entity.getId())).body(entity);
+    return ResponseEntity.status(HttpStatus.CREATED).body(entity);
   }
 
   @GetMapping
@@ -43,21 +40,16 @@ public class RevenueController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Revenue> readById(@PathVariable UUID id) {
-    var entity = service.readById(id);
-    if (entity == null) return ResponseEntity.notFound().build();
-    return ResponseEntity.ok(entity);
+    return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Revenue> update(@PathVariable UUID id, @Valid @RequestBody CreateOrUpdateRevenueRequestDTO dto) {
-    var entity = service.update(id, dto);
-    if (entity == null) return ResponseEntity.notFound().build();
-    return ResponseEntity.ok(entity);
+  public ResponseEntity<Revenue> update(@PathVariable UUID id, @RequestBody CreateOrUpdateRevenueRequestDTO dto) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable UUID id) {
-    boolean wasDeleted = service.delete(id);
-    return wasDeleted ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  public ResponseEntity<Revenue> delete(@PathVariable UUID id) throws Exception {
+    return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
   }
 }

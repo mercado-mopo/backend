@@ -1,6 +1,7 @@
 package com.seuprojeto.mopo.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,10 @@ public class RevenueService {
     }).orElse(null);
   }
 
-  public boolean delete(UUID id) {
-    if (repository.existsById(id)) {
+  public Revenue delete(UUID id) throws Exception {
+    var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    if (entity != null)
       repository.deleteById(id);
-      return true;
-    }
-    return false;
+    return entity;
   }
 }
