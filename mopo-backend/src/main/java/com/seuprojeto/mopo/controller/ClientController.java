@@ -29,6 +29,11 @@ public class ClientController {
     return ResponseEntity.status(HttpStatus.OK).body(service.readAll());
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<ClientResponseDTO> readById(@PathVariable UUID id) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<ClientResponseDTO> delete(@PathVariable UUID id) {
     return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
