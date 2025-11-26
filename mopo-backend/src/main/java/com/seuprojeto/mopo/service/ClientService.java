@@ -19,22 +19,22 @@ public class ClientService {
 
   public ClientResponseDTO create(Client client) {
     var entity = repository.save(client);
-    return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
+    return new ClientResponseDTO(entity);
   }
 
   public List<ClientResponseDTO> readAll() {
-    return repository.findAll().stream().map(c -> new ClientResponseDTO(c.getId(), c.getUsername(), c.getEmail(), c.getTelephone())).collect(Collectors.toList());
+    return repository.findAll().stream().map(ClientResponseDTO::new).collect(Collectors.toList());
   }
 
   public ClientResponseDTO readById(@PathVariable UUID id) throws Exception {
     var entity = repository.findById(id).orElseThrow(() -> new Exception("User not found"));
-    return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
+    return new ClientResponseDTO(entity);
   }
 
   public ClientResponseDTO deleteById(@PathVariable UUID id) throws Exception {
     var entity = repository.findById(id).orElseThrow(() -> new Exception("User not found"));
     repository.deleteById(id);
 
-    return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
+    return new ClientResponseDTO(entity);
   }
 }
