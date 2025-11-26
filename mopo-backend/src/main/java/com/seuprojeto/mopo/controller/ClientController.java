@@ -25,7 +25,7 @@ public class ClientController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Client>> readAll() {
+  public ResponseEntity<List<ClientResponseDTO>> readAll() {
     return ResponseEntity.status(HttpStatus.OK).body(service.readAll());
   }
 

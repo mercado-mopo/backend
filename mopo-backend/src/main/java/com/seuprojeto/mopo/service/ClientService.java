@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -21,12 +22,13 @@ public class ClientService {
     return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
   }
 
-  public List<Client> readAll() {
-    return repository.findAll();
+  public List<ClientResponseDTO> readAll() {
+    return repository.findAll().stream().map(c -> new ClientResponseDTO(c.getId(), c.getUsername(), c.getEmail(), c.getTelephone())).collect(Collectors.toList());
   }
+
   public ClientResponseDTO readById(@PathVariable UUID id) {
-      var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-    return  new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
+    var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
   }
 
   public ClientResponseDTO deleteById(@PathVariable UUID id) {
