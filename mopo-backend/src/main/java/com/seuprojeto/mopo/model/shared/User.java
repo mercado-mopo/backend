@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class User {
@@ -22,8 +22,8 @@ public abstract class User {
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @NotBlank(message = "Username cannot be blank")
   @NotNull(message = "Variable cannot be null")
@@ -56,7 +56,7 @@ public abstract class User {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 

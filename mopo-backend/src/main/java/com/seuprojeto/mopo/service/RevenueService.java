@@ -49,8 +49,7 @@ public class RevenueService {
 
   public Revenue delete(UUID id) throws Exception {
     var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-    if (entity != null)
-      repository.deleteById(id);
+    repository.deleteById(id);
     return entity;
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -26,5 +27,10 @@ public class ClientController {
   @GetMapping
   public ResponseEntity<List<Client>> readAll() {
     return ResponseEntity.status(HttpStatus.OK).body(service.readAll());
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<ClientResponseDTO> delete(@PathVariable UUID id) {
+    return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
   }
 }
