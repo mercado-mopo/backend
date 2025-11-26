@@ -1,53 +1,43 @@
 package com.seuprojeto.mopo.model;
 
+import com.seuprojeto.mopo.model.shared.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
-public class Client {
+@Table(name = "clients")
+public class Client extends User {
+  @Column(unique = true, length = 11)
+  private String cpf = "";
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @NotBlank(message = "O username não pode ser vazio")
-  private String username;
-
-  @Email(message = "E-mail inválido")
-  @NotBlank(message = "O e-mail é obrigatório")
-  private String email;
-
-  @NotBlank(message = "O telephone é obrigatório")
-  private String telephone;
+  @Column
+  @NotNull(message = "Variable cannot be null")
+  private LocalDate birthday;
 
   public Client() {
   }
 
-  public Long getId() {
-    return id;
+  public Client(String username, String email, String password, LocalDate birthday) {
+    super(username, email, password);
+    this.birthday = birthday;
   }
 
-  public String getUsername() {
-    return username;
+  public String getCpf() {
+    return cpf;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
   }
 
-  public String getEmail() {
-    return email;
+  public LocalDate getBirthday() {
+    return birthday;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
+  public void setBirthday(LocalDate birthday) {
+    this.birthday = birthday;
   }
 }
