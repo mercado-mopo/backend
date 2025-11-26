@@ -31,8 +31,8 @@ public class ClientService {
     return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());
   }
 
-  public ClientResponseDTO deleteById(@PathVariable UUID id) {
-    var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+  public ClientResponseDTO deleteById(@PathVariable UUID id) throws Exception {
+    var entity = repository.findById(id).orElseThrow(() -> new Exception("User not found"));
     repository.deleteById(id);
 
     return new ClientResponseDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getTelephone());

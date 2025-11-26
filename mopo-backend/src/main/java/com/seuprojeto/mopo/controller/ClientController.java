@@ -35,7 +35,7 @@ public class ClientController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<ClientResponseDTO> delete(@PathVariable UUID id) {
+  public ResponseEntity<ClientResponseDTO> delete(@PathVariable UUID id) throws Exception {
     return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
   }
 }

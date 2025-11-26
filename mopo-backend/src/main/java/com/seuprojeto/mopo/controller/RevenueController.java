@@ -39,12 +39,12 @@ public class RevenueController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Revenue> readById(@PathVariable UUID id) {
+  public ResponseEntity<Revenue> readById(@PathVariable UUID id) throws Exception {
     return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Revenue> update(@PathVariable UUID id, @RequestBody CreateOrUpdateRevenueRequestDTO dto) {
+  public ResponseEntity<Revenue> update(@PathVariable UUID id, @RequestBody CreateOrUpdateRevenueRequestDTO dto) throws Exception {
     return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
   }
 

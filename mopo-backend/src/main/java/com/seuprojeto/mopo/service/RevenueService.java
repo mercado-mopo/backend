@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,23 +33,18 @@ public class RevenueService {
     return repository.findAll();
   }
 
-  public Revenue readById(UUID id) {
-    return repository.findById(id).orElse(null);
+  public Revenue readById(UUID id) throws Exception {
+    return repository.findById(id).orElseThrow(()-> new Exception("Revenue not found"));
   }
 
-  public Revenue update(UUID id, CreateOrUpdateRevenueRequestDTO dto) {
-    return repository.findById(id).map(existing -> {
-      existing.setTitle(dto.title());
-      existing.setDescription(dto.description());
-      existing.setPreparationTime(dto.preparationTimeInMinutes());
-      existing.setEfficiency(dto.efficiency());
-
-      return repository.save(existing);
-    }).orElse(null);
+  public Revenue update(UUID id, CreateOrUpdateRevenueRequestDTO dto) throws Exception {
+    var entity = repository.findById(id).orElseThrow(() -> new Exception("Revenue not found"));
+    BeanUtils.copyProperties(dto, entity);
+    return repository.save(entity);
   }
 
   public Revenue delete(UUID id) throws Exception {
-    var entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    var entity = repository.findById(id).orElseThrow(() -> new Exception("Revenue not found"));
     repository.deleteById(id);
     return entity;
   }
