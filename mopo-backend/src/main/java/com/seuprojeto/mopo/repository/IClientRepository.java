@@ -1,11 +1,11 @@
 package com.seuprojeto.mopo.repository;
 
+import com.seuprojeto.mopo.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.seuprojeto.mopo.model.Receita;
+import java.util.UUID;
 
 @Repository
-public interface ReceitaRepository extends JpaRepository<Receita, Long> {
-    
+public interface IClientRepository extends JpaRepository<Client, UUID> {
 }
