@@ -1,51 +1,73 @@
 package com.seuprojeto.mopo.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
+import com.seuprojeto.mopo.dto.response.RevenueResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
+import com.seuprojeto.mopo.dto.request.RevenueRequestDTO;
 import com.seuprojeto.mopo.model.Revenue;
 import com.seuprojeto.mopo.repository.IRevenueRepository;
 
 @Service
+@Slf4j
 public class RevenueService {
+    @Autowired
+    private IRevenueRepository repository;
 
-  @Autowired
-  private IRevenueRepository repository;
+    public RevenueResponseDTO create(CreateOrUpdateRevenueRequestDTO dto) {
+        var entity = Revenue.builder()
+                .title(dto.title())
+                .describe(dto.describe())
+                .image(dto.image())
+                .ingredients(dto.ingredients())
+                .instructions(dto.instructions())
+                .preparationTime(dto.preparationTime())
+                .efficiency(dto.efficiency())
+                .rating(dto.rating())
+                .difficulty(dto.difficulty())
+                .build();
 
-  public Revenue create(CreateOrUpdateRevenueRequestDTO dto) {
-    var entity = new Revenue(
-      dto.title(),
-      dto.image(),
-      dto.ingredients(),
-      dto.instructions(),
-      dto.preparationTimeInMinutes()
-    );
-    return repository.save(entity);
-  }
+        var response = repository.save(entity);
 
-  public List<Revenue> readAll() {
-    return repository.findAll();
-  }
+        return new RevenueResponseDTO(response);
+    }
 
-  public Revenue readById(UUID id) throws Exception {
-    return repository.findById(id).orElseThrow(()-> new Exception("Revenue not found"));
-  }
+    public List<RevenueResponseDTO> readAll() {
+        return repository.findAll().stream().map(RevenueResponseDTO::new).collect(Collectors.toList());
+    }
 
-  public Revenue update(UUID id, CreateOrUpdateRevenueRequestDTO dto) throws Exception {
-    var entity = repository.findById(id).orElseThrow(() -> new Exception("Revenue not found"));
-    BeanUtils.copyProperties(dto, entity);
-    return repository.save(entity);
-  }
+    public RevenueResponseDTO readById(UUID id) throws Exception {
+        var entity = repository.findById(id);
 
-  public Revenue delete(UUID id) throws Exception {
-    var entity = repository.findById(id).orElseThrow(() -> new Exception("Revenue not found"));
-    repository.deleteById(id);
-    return entity;
-  }
+        if (entity.isEmpty())
+            throw new Exception(String.format("Revenue with id %s not found", id));
+
+        return new RevenueResponseDTO(entity.get());
+    }
+
+    public RevenueResponseDTO update(UUID id, RevenueRequestDTO dto) throws Exception {
+        var entity = repository.findById(id);
+        if (entity.isEmpty())
+            throw new Exception(String.format("Revenue with id %s not found", id));
+
+        BeanUtils.copyProperties(dto, entity);
+
+        var response = repository.save(entity.get());
+
+        return new RevenueResponseDTO(response);
+    }
+
+    public RevenueResponseDTO delete(UUID id) throws Exception {
+        var entity = readById(id);
+
+        repository.deleteById(entity.id());
+        return entity;
+    }
 }

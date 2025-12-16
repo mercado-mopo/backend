@@ -2,42 +2,25 @@ package com.seuprojeto.mopo.model;
 
 import com.seuprojeto.mopo.model.shared.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "clients")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 public class Client extends User {
-  @Column(unique = true, length = 11)
-  private String cpf = "";
+    @Column(unique = true, length = 120)
+    private String cpf;
 
-  @Column
-  @NotNull(message = "Variable cannot be null")
-  private LocalDate birthday;
-
-  public Client() {
-  }
-
-  public Client(String username, String email, String password, LocalDate birthday) {
-    super(username, email, password);
-    this.birthday = birthday;
-  }
-
-  public String getCpf() {
-    return cpf;
-  }
-
-  public void setCpf(String cpf) {
-    this.cpf = cpf;
-  }
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
+    @Column
+    private Date dateOfBirth;
 }

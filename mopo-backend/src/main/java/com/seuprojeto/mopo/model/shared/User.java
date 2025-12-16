@@ -1,110 +1,99 @@
 package com.seuprojeto.mopo.model.shared;
 
+import com.seuprojeto.mopo.model.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @MappedSuperclass
-public abstract class User {
-  public User() {
-  }
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public abstract class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false)
+    private UUID id;
 
-  public User(String username, String email, String password) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-  }
+    @Column(unique = true, length = 100)
+    private String username;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+    @NotNull
+    @NotBlank
+    @Email(message = "E-mail inválido")
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
 
-  @NotBlank(message = "Username cannot be blank")
-  @NotNull(message = "Variable cannot be null")
-  @Column(unique = true, length = 100)
-  private String username = "";
+    @NotNull
+    @NotBlank
+    @Column(nullable = false, length = 120)
+    private String password;
 
-  @Email(message = "Invalid email")
-  @NotBlank(message = "Email cannot be blank")
-  @NotNull(message = "Variable cannot be null")
-  @Column(nullable = false, unique = true, length = 100)
-  private String email;
+    @Column(length = 15)
+    private String telephone;
 
-  @NotBlank(message = "Password cannot be blank")
-  @NotNull(message = "Variable cannot be null")
-  @Column(nullable = false)
-  private String password;
+    @Column
+    private Boolean isActive = true;
 
-  @NotNull(message = "Variable cannot be null")
-  @Column(length = 15)
-  private String telephone = "";
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-  @Column(nullable = false)
-  private boolean isActive = true;
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-  @Column
-  @CreationTimestamp
-  private LocalDateTime createdAt;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Column
+    @NotNull
+    private Set<Role> roles = new HashSet<>();
 
-  @Column
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(
+                r -> new SimpleGrantedAuthority(r.getRoleName().name())).toList();
+    }
 
-  public UUID getId() {
-    return id;
-  }
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public String getRole() {
+        return this.getClass().getSimpleName().toUpperCase();
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public boolean isActive() {
-    return isActive;
-  }
-
-  public void toggleActive() {
-    this.isActive = !this.isActive;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 }

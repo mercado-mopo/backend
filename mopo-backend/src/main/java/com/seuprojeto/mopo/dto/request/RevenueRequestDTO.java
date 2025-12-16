@@ -2,7 +2,7 @@ package com.seuprojeto.mopo.dto.request;
 
 import java.util.List;
 
-public record CreateOrUpdateRevenueRequestDTO(
+public record RevenueRequestDTO(
         String title,
         String describe,
         String image,

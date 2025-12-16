@@ -1,11 +1,11 @@
 package com.seuprojeto.mopo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.seuprojeto.mopo.dto.request.CreateOrUpdateRevenueRequestDTO;
-import com.seuprojeto.mopo.model.Revenue;
+import com.seuprojeto.mopo.dto.response.RevenueResponseDTO;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.seuprojeto.mopo.dto.request.RevenueRequestDTO;
 import com.seuprojeto.mopo.service.RevenueService;
 
 import java.util.List;
@@ -13,43 +13,40 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
+@Validated
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/revenue")
 public class RevenueController {
-  @Autowired
-  private RevenueService service;
+    private final RevenueService service;
 
-  @PostMapping
-  public ResponseEntity<Revenue> create(@RequestBody CreateOrUpdateRevenueRequestDTO dto) {
-    var entity = service.create(dto);
-    return ResponseEntity.status(HttpStatus.CREATED).body(entity);
-  }
+    public RevenueController(RevenueService service) {
+        this.service = service;
+    }
 
-  @GetMapping
-  public List<Revenue> readAll() {
-    return service.readAll();
-  }
+    @PostMapping
+    public ResponseEntity<RevenueResponseDTO> create(@RequestBody CreateOrUpdateRevenueRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+    }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Revenue> readById(@PathVariable UUID id) throws Exception {
-    return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
-  }
+    @GetMapping
+    public List<RevenueResponseDTO> readAll() {
+        return service.readAll();
+    }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Revenue> update(@PathVariable UUID id, @RequestBody CreateOrUpdateRevenueRequestDTO dto) throws Exception {
-    return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<RevenueResponseDTO> readById(@PathVariable UUID id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.readById(id));
+    }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Revenue> delete(@PathVariable UUID id) throws Exception {
-    return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
-  }
+    @PutMapping("/{id}")
+    public ResponseEntity<RevenueResponseDTO> update(@PathVariable UUID id, @RequestBody RevenueRequestDTO dto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RevenueResponseDTO> delete(@PathVariable UUID id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
+    }
 }
