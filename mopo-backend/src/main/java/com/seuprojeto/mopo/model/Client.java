@@ -8,19 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
+import java.util.*;
 
 @Entity
-@Table(name = "client")
+@Table(name = "clients")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 public class Client extends User {
-    @Column(nullable = false, unique = true, length = 120)
+    @Column(unique = true, length = 120)
     private String cpf;
 
-    @Column(nullable = false, length = 120)
+    @Column
     private Date dateOfBirth;
 }

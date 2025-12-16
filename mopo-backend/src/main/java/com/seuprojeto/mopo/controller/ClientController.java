@@ -1,6 +1,5 @@
 package com.seuprojeto.mopo.controller;
 
-import com.seuprojeto.mopo.dto.request.CreateOrUpdateClientRequestDTO;
 import com.seuprojeto.mopo.dto.response.ClientResponseDTO;
 import com.seuprojeto.mopo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,6 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientService service;
-
-    @PostMapping
-    public ResponseEntity<ClientResponseDTO> create(@RequestBody CreateOrUpdateClientRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
-    }
 
     @GetMapping
     public ResponseEntity<List<ClientResponseDTO>> readAll() {

@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public record ClientResponseDTO(UUID id, String name, String email, String telephone) {
     public ClientResponseDTO(Client entity) {
-        this(entity.getId(), entity.getName(), entity.getEmail(), entity.getTelephone());
+        this(entity.getId(), entity.getUsername(), entity.getEmail(), null);
     }
 }
